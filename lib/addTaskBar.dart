@@ -19,10 +19,6 @@ class _AddTaskPageState extends State<AddTaskPage> {
   DateTime _selectedDate = DateTime.now();
   String _endTime = "9:30";
   String _startTime = DateFormat('hh:mm').format(DateTime.now()).toString();
-  int _selectedRemind = 5;
-  List<int> remindList = [5, 10, 15, 20];
-  String _selectedRepeat = "None";
-  List<String> repeatList = ["None", "Daily", "Weekly", "Monthly"];
   int _selectedColor = 0;
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
@@ -65,9 +61,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 ),
               ),
               _startAndEndTime(),
-              remind(reminder: true),
-              remind(reminder: false),
-              const SizedBox(height: 18),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -198,50 +192,6 @@ class _AddTaskPageState extends State<AddTaskPage> {
     );
   }
 
-  remind({required bool reminder}) {
-    return MyInputField(
-      title: reminder ? "Remind" : "Repeat",
-      hint: reminder ? "$_selectedRemind minutes early" : "$_selectedRepeat ",
-      widget: DropdownButton(
-        icon: const Icon(
-          Icons.keyboard_arrow_down,
-          color: Colors.grey,
-        ),
-        iconSize: 32,
-        elevation: 4,
-        underline: Container(
-          height: 0,
-        ),
-        style: subTitleStyle,
-        items: reminder
-            ? remindList.map<DropdownMenuItem<String>>((int value) {
-                return DropdownMenuItem<String>(
-                  value: value.toString(),
-                  child: Text(value.toString()),
-                );
-              }).toList()
-            : repeatList.map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(
-                    value,
-                    style: const TextStyle(
-                      color: Colors.grey,
-                    ),
-                  ),
-                );
-              }).toList(),
-        onChanged: (String? newValue) {
-          setState(() {
-            reminder
-                ? _selectedRemind = int.parse(newValue!)
-                : _selectedRepeat = newValue!;
-          });
-        },
-      ),
-    );
-  }
-
   TextStyle get titleStyle {
     return GoogleFonts.lato(
       textStyle: TextStyle(
@@ -260,7 +210,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
           "Color",
           style: titleStyle,
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 10),
         Wrap(
           children: List<Widget>.generate(
             3,
@@ -324,8 +274,6 @@ class _AddTaskPageState extends State<AddTaskPage> {
         date: DateFormat.yMd().format(_selectedDate),
         startTime: _startTime,
         endTime: _endTime,
-        remind: _selectedRemind,
-        repeat: _selectedRepeat,
         color: _selectedColor,
         isCompleted: 0,
       ),
