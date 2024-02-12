@@ -1,9 +1,5 @@
 # timetable
 
-new Flutter project.
-
-## Getting Started
-
 timetable: application for organize your day where you can add tasks with some information for each task and display each day's tasks
 
 Timetable is flutter application with sqflite, where you can:
